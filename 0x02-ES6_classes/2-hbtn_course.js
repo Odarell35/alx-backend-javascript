@@ -17,7 +17,7 @@ export default class HolbertonCourse {
 
 	set name(newName) {
 		if (typeof newName !== 'string') {
-			throw new Error ('Invalid');
+			throw new Error ('Name must be a string');
 		}
 		this._name = newName;
 	}
@@ -27,7 +27,7 @@ export default class HolbertonCourse {
 
 	set length(newLength) {
         if (typeof newLength !== 'number') {
-            throw new Error('Invalid type');
+            throw new Error('Length must be a number');
         }
         this._length = newLength;
     }
