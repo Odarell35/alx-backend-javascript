@@ -3,11 +3,9 @@ export default function updateUniqueItems(inputMap) {
     throw new Error('Cannot process');
   }
 
-  const updatedMap = new Map();
-
   for (const [i, q] of inputMap) {
-    updatedMap.set(i, q === 1 ? 100 : q);
+    inputMap.set(i, q === 1 ? 100 : q);
   }
 
-  return updatedMap;
+  return inputMap;
 }
