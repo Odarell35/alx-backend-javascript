@@ -1,46 +1,30 @@
-const fs = require('fs');
+const fs = require('fs').promises;
 
-function countStudents(path) {
+async function countStudents(path) {
     try {
-	if (!fs.existsSync(path)){
-		throw new Error('Cannot load the database');	}
-        const data = fs.readFileSync(path, 'utf8');
+        // Read data from file
+        const data = await fs.readFile(path, { encoding: 'utf-8' });
         const lines = data.trim().split('\n');
-        const counters = {};
-        lines.forEach(line => {
-            const fields = line.split(',');
-            if (fields.length > 1) {
-                fields.forEach((field, index) => {
-                    if (index in counters) {
-                        counters[index]++;
-                    } else {
-                        counters[index] = 1;
-                    }
-                });
-            }
-        });
-        console.log(`Number of students: ${lines.length}`);
-        for (const [field, count] of Object.entries(counters)) {
-            console.log(`Number of students in FIELD ${field}: ${count}. List: ${getFirstNames(path, parseInt(field))}`);
+
+        // Initialize counters and student lists
+        const fields = new Map();
+        const students = new Map();
+
+        // Parse each line and count students by field
+        for (const line of lines.slice(1)) {
+            const [firstname, field] = line.split(',');
+            fields.set(field, (fields.get(field) || 0) + 1);
+            students.set(field, (students.get(field) || []).concat(firstname));
         }
-    } catch (err) {
+
+        // Display results
+        console.log(`Number of students: ${lines.length - 1}`);
+        for (const [field, count] of fields.entries()) {
+            console.log(`Number of students in ${field}: ${count}. List: ${students.get(field).join(', ')}`);
+        }
+    } catch (error) {
         throw new Error('Cannot load the database');
     }
 }
+
 module.exports = countStudents;
-// Helper function to get the list of first names in a specific field
-function getFirstNames(path, fieldIndex) {
-    const data = fs.readFileSync(path, 'utf8');
-    const lines = data.trim().split('\n');
-    const firstNames = [];
-
-    lines.forEach(line => {
-        const fields = line.split(',');
-        if (fields.length > 1) {
-            firstNames.push(fields[fieldIndex]);
-        }
-    });
-
-    return firstNames.join(', ');
-}
-module.exports = getFirstNames;
