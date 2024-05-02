@@ -13,3 +13,9 @@ describe('calculateNumber', function () {
       assert.strictEqual(calculateNumber(1, 3.7), 5);
     });
   });
+  describe('Two round again floor both', function () {
+    it('should return 3', function () {
+      assert.strictEqual(calculateNumber(1.2, 2.1), 3);
+    });
+  });
+});
