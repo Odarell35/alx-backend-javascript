@@ -7,18 +7,11 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 
-// Displaying a welcome message
-console.log("Welcome to Holberton School, what is your name?\n");
+console.log("Welcome to Holberton School, what is your name?");
 
-// Listening for user input
 rl.on('line', (input) => {
-    // Displaying the user's name
     console.log(`Your name is: ${input}`);
-
-    // Displaying closing message
-    console.log("This important software is now closing\n");
-
+    console.log("This important software is now closing");
     // Closing the readline interface
     rl.close();
 });
-
