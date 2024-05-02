@@ -6,12 +6,11 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
-console.log("Welcome to Holberton School, what is your name?");
+console.log("Welcome to Holberton School, what is your name?\n");
 
 rl.on('line', (input) => {
-  console.log(`Your name is: ${input}`);
-  console.log("This important software is now closing");
-
-  rl.close();
-});
-
+	if (input !== null)console.log(`Your name is: ${input}`);
+	});
+rl.on('line', (output) => {
+	console.log("This important software is now closing");
+	});
